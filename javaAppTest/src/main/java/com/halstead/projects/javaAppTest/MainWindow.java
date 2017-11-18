@@ -25,11 +25,17 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
+import java.awt.Cursor;
+import java.awt.Dimension;
+
+import javax.swing.JLabel;
 
 public class MainWindow {
 
 	private JFrame frmMainWindow;
-	private JTextField commandIn;
+	private JTextField usernameIn;
+	private JPasswordField passwordIn;
 
 	/**
 	 * Launch the application.
@@ -55,19 +61,25 @@ public class MainWindow {
 	}
 	
 	public void doActionCheck() {
+		
 		//JSONObject obj = new JSONObject(arg0);
 		//JOptionPane.showMessageDialog(null, obj.toString());
-		if(new String(commandIn.getText()).equalsIgnoreCase("shutdown")) {
-			JOptionPane.showConfirmDialog(null, "Would you Like to Shutdown?", "Shutdown?", 0);
+		
+		frmMainWindow.hide();
+		if(new String(usernameIn.getText()).equalsIgnoreCase("shutdown") & Arrays.equals( "psw".toCharArray(), passwordIn.getPassword() )) {
+			JOptionPane.showConfirmDialog(frmMainWindow, "Would you Like to Shutdown?", "Shutdown?", 0);
 		}
-		else if(new String(commandIn.getText()).equalsIgnoreCase("")) {
-			JOptionPane.showMessageDialog(null, "OYYY, OYY, OYYY\nI NEED A COMMAND!");
+		else if(usernameIn.getText().equals("") & Arrays.equals("".toCharArray(), passwordIn.getPassword()) ) {
+			JOptionPane.showMessageDialog(frmMainWindow, "OYYY, OYY, OYYY\nI NEED A LOGIN!");
 		}
 		else {
-			JOptionPane.showMessageDialog(null, new String(commandIn.getText()));
+			JOptionPane.showMessageDialog(frmMainWindow, "Username or Password does not match what is Registered with the System!", "No Login", 3);	
 		}
 		
-		commandIn.setText("");
+		usernameIn.setText("");
+		passwordIn.setText("");
+		frmMainWindow.show();
+		usernameIn.grabFocus();
 	}
 	
 	/**
@@ -81,11 +93,35 @@ public class MainWindow {
 		frmMainWindow.setBounds(100, 100, 500, 400);
 		frmMainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		commandIn = new JTextField();
-		commandIn.addKeyListener(new KeyAdapter() {
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frmMainWindow.setLocation(dim.width/2-frmMainWindow.getSize().width/2, dim.height/2-frmMainWindow.getSize().height/2);
+		
+		usernameIn = new JTextField();
+		usernameIn.setBounds(139, 113, 330, 35);
+		usernameIn.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent arg0) {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_ENTER){
+					passwordIn.grabFocus();
+		        }
 			}
+		});
+		usernameIn.setColumns(10);
+		
+		JButton checkLogin = new JButton("Login");
+		checkLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		checkLogin.setBounds(163, 260, 131, 29);
+		checkLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				doActionCheck();
+			}
+		});
+		
+		checkLogin.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		checkLogin.setBackground(UIManager.getColor("CheckBox.darkShadow"));
+		
+		passwordIn = new JPasswordField();
+		passwordIn.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode()==KeyEvent.VK_ENTER){
@@ -93,39 +129,20 @@ public class MainWindow {
 		        }
 			}
 		});
-		commandIn.setColumns(10);
+		passwordIn.setBounds(139, 159, 330, 35);
+		frmMainWindow.getContentPane().setLayout(null);
+		frmMainWindow.getContentPane().add(checkLogin);
+		frmMainWindow.getContentPane().add(passwordIn);
+		frmMainWindow.getContentPane().add(usernameIn);
 		
-		JButton btnClickMe = new JButton("Check System");
-		btnClickMe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				doActionCheck();
-			}
-		});
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblUsername.setBounds(54, 122, 75, 14);
+		frmMainWindow.getContentPane().add(lblUsername);
 		
-		btnClickMe.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnClickMe.setBackground(UIManager.getColor("CheckBox.darkShadow"));
-		GroupLayout groupLayout = new GroupLayout(frmMainWindow.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(70, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(commandIn, GroupLayout.PREFERRED_SIZE, 385, GroupLayout.PREFERRED_SIZE)
-							.addGap(39))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(btnClickMe, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-							.addGap(151))))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(110)
-					.addComponent(commandIn, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-					.addGap(46)
-					.addComponent(btnClickMe, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(105, Short.MAX_VALUE))
-		);
-		frmMainWindow.getContentPane().setLayout(groupLayout);
+		JLabel lblPasword = new JLabel("Password");
+		lblPasword.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblPasword.setBounds(54, 169, 75, 14);
+		frmMainWindow.getContentPane().add(lblPasword);
 	}
 }
