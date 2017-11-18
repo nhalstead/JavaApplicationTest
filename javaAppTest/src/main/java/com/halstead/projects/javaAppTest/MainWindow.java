@@ -67,7 +67,7 @@ public class MainWindow {
 		
 		frmMainWindow.hide();
 		if(new String(usernameIn.getText()).equalsIgnoreCase("username") & Arrays.equals( "psw".toCharArray(), passwordIn.getPassword() )) {
-			JOptionPane.showConfirmDialog(frmMainWindow, "Would you Like to Shutdown?", "Shutdown?", 0);
+			JOptionPane.showConfirmDialog(frmMainWindow, "Would you Like to Login?", "Confirm Login?", 0);
 		}
 		else if(usernameIn.getText().equals("") & Arrays.equals("".toCharArray(), passwordIn.getPassword()) ) {
 			JOptionPane.showMessageDialog(frmMainWindow, "OYYY, OYY, OYYY\nI NEED A LOGIN!");
