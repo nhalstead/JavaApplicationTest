@@ -66,7 +66,7 @@ public class MainWindow {
 		//JOptionPane.showMessageDialog(null, obj.toString());
 		
 		frmMainWindow.hide();
-		if(new String(usernameIn.getText()).equalsIgnoreCase("shutdown") & Arrays.equals( "psw".toCharArray(), passwordIn.getPassword() )) {
+		if(new String(usernameIn.getText()).equalsIgnoreCase("username") & Arrays.equals( "psw".toCharArray(), passwordIn.getPassword() )) {
 			JOptionPane.showConfirmDialog(frmMainWindow, "Would you Like to Shutdown?", "Shutdown?", 0);
 		}
 		else if(usernameIn.getText().equals("") & Arrays.equals("".toCharArray(), passwordIn.getPassword()) ) {
@@ -93,8 +93,8 @@ public class MainWindow {
 		frmMainWindow.setBounds(100, 100, 500, 400);
 		frmMainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		frmMainWindow.setLocation(dim.width/2-frmMainWindow.getSize().width/2, dim.height/2-frmMainWindow.getSize().height/2);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize(); // Assist for the Next Action
+		frmMainWindow.setLocation(dim.width/2-frmMainWindow.getSize().width/2, dim.height/2-frmMainWindow.getSize().height/2); // Center the Window on the Screen
 		
 		usernameIn = new JTextField();
 		usernameIn.setBounds(139, 113, 330, 35);
